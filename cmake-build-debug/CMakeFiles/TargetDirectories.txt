@@ -1,0 +1,3 @@
+/home/ankou/Artificial-Neural-Network/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/ankou/Artificial-Neural-Network/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/ankou/Artificial-Neural-Network/cmake-build-debug/CMakeFiles/ann.dir
