@@ -92,20 +92,31 @@ void layer_compute_outputs(layer_t const *layer)
   }
 }
 
-/* Computes the delta errors for this layer. */
+/* Computes the delta errors for this layer
+ * uses the back-propagation algorithm */
 void layer_compute_deltas(layer_t const *layer)
-{
-  /**** PART 1 - QUESTION 6 ****/
-  /* objective: compute layer->deltas */
-
-  /* 2 MARKS */
+{   assert(layer != NULL);
+    double sum = 0 ; 
+    for(int i = 0 ; i < layer->num_inputs; i++){
+     sum = 0 ; 
+      for(int j = 0 ;  j < layer->num_outputs; j++){
+  	 sum += layer->weights[i][j] * layer->next->deltas[j];     
+      }
+     layer->deltas[i] = sigmoidprime(layer->outputs[i])*sum ;
+    }
 }
 
-/* Updates weights and biases according to the delta errors given learning rate. */
+/* Updates weights and biases according
+ * to the delta errors given learning rate. */
 void layer_update(layer_t const *layer, double l_rate)
-{
-  /**** PART 1 - QUESTION 7 ****/
-  /* objective: update layer->weights and layer->biases */
-
-  /* 1 MARK */
+{ 
+  assert(layer != NULL);
+  for(int i = 0 ; i < layer->prev->num_inputs ; i++){
+    for(int j = 0 ; j < layer->num_inputs ; j++){
+    layer->weights[i][j] = layer->weights[i][j] + (l_rate *
+	    layer->outputs[i] * layer->deltas[j]);  
+    }    
+    
+  }
+  
 }
