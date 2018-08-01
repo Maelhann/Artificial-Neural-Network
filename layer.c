@@ -82,10 +82,14 @@ void layer_free(layer_t *layer)
 /* Computes the outputs of the current layer. */
 void layer_compute_outputs(layer_t const *layer)
 {
-  /**** PART 1 - QUESTION 5 ****/
-  /* objective: compute layer->outputs */
-
-  /* 3 MARKS */
+  double sum = 0 ;
+  for(int j = 0 ; j < layer->num_outputs ; j++){
+    sum = 0; 
+       for(int i = 0 ; i < layer->prev->num_outputs ; i++){
+     sum += layer->prev->outputs[i] * layer->weights[i][j]; 
+       }
+   layer->outputs[j] = sigmoid(layer->biases[j] + sum); 
+  }
 }
 
 /* Computes the delta errors for this layer. */
