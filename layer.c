@@ -42,27 +42,41 @@ bool layer_init(layer_t *layer, int num_outputs, layer_t *prev)
   // initialize biases and deltas to zero. 
   for(int j = 0; j < prev->num_outputs;j++){
    layer->biases[j] = 0 ;
-   layer->biases[j] = 0 ; 
+   layer->deltas[j] = 0 ; 
    }
   layer->weights = calloc(prev->num_outputs,sizeof(double*)); 
   for(int k = 0 ; k < prev->num_outputs ; k++){
      layer->weights[k] = calloc(prev->num_outputs,sizeof(double)); 
      for(int l = 0 ; l < prev->num_outputs; l++){
-      layer->weights[k][l] = ANN_RANDOM(); 
+       layer->weights[k][l] = ANN_RANDOM(); 
      }
   }
-  
+   if(layer->weights == NULL ||
+      layer->biases == NULL  ||
+      layer->deltas == NULL){
+   return true;
+    }
   }
-  return false;  
   
+  if(layer->outputs == NULL){
+   return true ; 
+  }
+ return false;  
 }
 
 /* Frees a given layer. */
 void layer_free(layer_t *layer)
 {
-  /**** PART 1 - QUESTION 4 ****/
-
-  /* 2 MARKS */
+  free(layer->next); 
+  free(layer->prev); 
+  free(layer->outputs);
+  free(layer->biases);
+  free(layer->deltas); 
+  for(int i = 0 ; i < layer->num_inputs ;i++){
+    free(layer->weights[i]); 
+  }
+  free(layer->weights);  
+  free(layer);   
 }
 
 /* Computes the outputs of the current layer. */
