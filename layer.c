@@ -118,5 +118,4 @@ void layer_update(layer_t const *layer, double l_rate)
     }    
     
   }
-  
 }

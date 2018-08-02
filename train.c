@@ -83,12 +83,16 @@ int main()
   printf("The current state of the hidden layer:\n");
   for(int i=0; i < layer_outputs[0]; ++i) {
     for(int j=0; j < layer_outputs[1]; ++j)
-      printf("  weights[%i][%i]: %f\n", i, j, xor_ann->input_layer->next->weights[i][j]);
+      printf("  weights[%i][%i]: %f\n"
+		      , i, j, xor_ann
+		      ->input_layer->next->weights[i][j]);
   }
   for(int i=0; i < layer_outputs[1]; ++i)
-    printf("  biases[%i]: %f\n", i, xor_ann->input_layer->next->biases[i]);
+    printf("  biases[%i]: %f\n", i
+		    , xor_ann->input_layer->next->biases[i]);
   for(int i=0; i < layer_outputs[1]; ++i)
-    printf("  outputs[%i]: %f\n", i, xor_ann->input_layer->next->outputs[i]);
+    printf("  outputs[%i]: %f\n", i
+		    , xor_ann->input_layer->next->outputs[i]);
 
   /* Dummy run to see random network output. */
   printf("Current random outputs of the network:\n");
