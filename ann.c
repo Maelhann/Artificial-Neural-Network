@@ -57,9 +57,20 @@ void ann_train(ann_t const *ann, double const *inputs, double const *targets, do
   assert(l_rate > 0);
 
   /* Run forward pass. */
-  ann_predict(ann, inputs);
-
-  /**** PART 2 - QUESTION 4 ****/
-
-  /* 3 MARKS */
+  ann_predict(ann, inputs); 
+  for(int j = 0 ; j < ann->output_layer->num_inputs ; j++){
+   ann->output_layer->deltas[j] 
+	   = sigmoidprime(ann->output_layer->outputs[j])
+	   *(targets[j] - ann->output_layer->outputs[j]);
+  }
+  layer_update(ann->output_layer,l_rate);
+  layer_t* curr = ann->output_layer->prev; 
+  while(curr->prev != NULL){
+    layer_compute_deltas(curr);
+    layer_update(curr,l_rate); 
+    curr = curr->prev; 
+  }
+  ann_predict(ann,inputs); 
+  
+  
 }
