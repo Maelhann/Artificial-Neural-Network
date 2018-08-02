@@ -35,10 +35,16 @@ void ann_free(ann_t *ann)
   free(ann);
 }
 
-/* Forward run of given ann with inputs. */
+/* Forward run of given a. neural net  with inputs. */
 void ann_predict(ann_t const *ann, double const *inputs)
 {
- 
+ ann->input_layer->outputs = inputs; 
+ layer_t* curr = ann->input_layer->next ;  
+ while(curr->next != NULL ){
+  layer_compute_outputs(curr);
+  curr = curr->next ; 
+ }
+ layer_compute_outputs(ann->output_layer); 
 }
 
 /* Trains the ann with single backprop update. */
