@@ -100,7 +100,7 @@ void layer_compute_deltas(layer_t const *layer)
     for(int i = 0 ; i < layer->num_inputs; i++){
      sum = 0 ; 
       for(int j = 0 ;  j < layer->num_outputs; j++){
-  	 sum += layer->weights[i][j] * layer->next->deltas[j];     
+  	 sum += layer->next->weights[i][j] * layer->next->deltas[j];     
       }
      layer->deltas[i] = sigmoidprime(layer->outputs[i])*sum ;
     }
@@ -114,7 +114,7 @@ void layer_update(layer_t const *layer, double l_rate)
   for(int i = 0 ; i < layer->prev->num_inputs ; i++){
     for(int j = 0 ; j < layer->num_inputs ; j++){
     layer->weights[i][j] += l_rate *
-	    layer->outputs[i] * layer->deltas[j]; 
+	    layer->prev->outputs[i] * layer->deltas[j]; 
     layer->biases[j] += l_rate * layer->deltas[j];  
 		    
     }    
